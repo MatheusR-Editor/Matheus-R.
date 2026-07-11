@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matheus R. — Video Editor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0b0b;
+    --text:#f5f5f3;
+    --dim:#a3a3a0;
+    --line:rgba(255,255,255,0.85);
+    --line-soft:rgba(255,255,255,0.14);
+    --white:#ffffff;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Nunito', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{ color:inherit; text-decoration:none; }
+  button{ font-family:inherit; }
+  ::selection{ background:var(--white); color:var(--bg); }
+
+  .page{
+    max-width:1040px;
+    margin:0 auto;
+    padding:70px 24px 60px;
+    text-align:center;
+    position:relative;
+  }
+
+  /* the one blur/glow effect on the page */
+  .glow{
+    position:absolute;
+    top:-40px; left:50%;
+    width:520px; height:420px;
+    transform:translateX(-50%);
+    background:radial-gradient(circle, rgba(255,255,255,0.30) 0%, rgba(255,255,255,0) 68%);
+    filter:blur(50px);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  section{ position:relative; z-index:1; }
+
+  /* ---------- HEADER ---------- */
+  .avatar{
+    width:120px; height:120px;
+    border-radius:50%;
+    margin:0 auto 22px;
+    border:3px solid var(--white);
+    display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(150deg, #232323 0%, #0d0d0d 70%);
+    font-weight:800;
+    font-size:32px;
+    box-shadow:0 0 40px rgba(255,255,255,0.18);
+  }
+  .name{
+    font-size:26px;
+    font-weight:800;
+    letter-spacing:0.01em;
+  }
+  .email-link{
+    display:inline-block;
+    margin-top:8px;
+    font-size:14.5px;
+    font-weight:600;
+    color:var(--text);
+    opacity:0.85;
+    transition:opacity .25s ease;
+  }
+  .email-link:hover{ opacity:1; }
+
+  /* ---------- DASH HEADERS ---------- */
+  .dash-title{
+    font-size:clamp(24px, 3.4vw, 32px);
+    font-weight:800;
+    color:var(--text);
+    margin:56px 0 30px;
+  }
+  .dash-title:first-of-type{ margin-top:60px; }
+
+  /* ---------- BORDERED BOX ---------- */
+  .box{
+    border:1.5px solid var(--line);
+    border-radius:28px;
+    padding:36px 20px;
+  }
+
+  /* ---------- VIDEO ROW ---------- */
+  .video-row{
+    display:flex;
+    gap:22px;
+    overflow-x:auto;
+    padding-bottom:6px;
+    scrollbar-width:thin;
+  }
+  .video-row::-webkit-scrollbar{ height:5px; }
+  .video-row::-webkit-scrollbar-thumb{ background:var(--line-soft); border-radius:10px; }
+
+  .video-item{
+    flex:0 0 auto;
+    width:190px;
+  }
+  .video-title{
+    font-size:14.5px;
+    font-weight:700;
+    margin-bottom:14px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .thumb{
+    position:relative;
+    border-radius:16px;
+    overflow:hidden;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(255,255,255,0.08), transparent 55%),
+      linear-gradient(150deg, #232323 0%, #0d0d0d 70%);
+    border:1px solid var(--line-soft);
+  }
+  .thumb.vertical{ aspect-ratio:9/16; width:100%; }
+  .thumb.horizontal{ aspect-ratio:16/9; width:100%; max-width:480px; margin:0 auto; }
+  .thumb-lines{
+    position:absolute; inset:0;
+    background-image:repeating-linear-gradient(90deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 30px);
+  }
+  .play{
+    position:absolute; top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    width:46px; height:46px;
+    border-radius:50%;
+    border:2px solid var(--white);
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(255,255,255,0.10);
+    transition:transform .3s ease, background .3s ease;
+  }
+  .thumb:hover .play{ transform:translate(-50%,-50%) scale(1.08); background:var(--white); }
+  .thumb:hover .play svg{ fill:var(--bg); }
+  .play svg{ width:14px; height:14px; fill:var(--white); margin-left:2px; }
+
+  /* single horizontal video wrapper */
+  .single-video .video-title{ white-space:normal; }
+  .single-video{ max-width:480px; margin:0 auto; }
+
+  /* ---------- CLIENTS ---------- */
+  .client{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:14px;
+  }
+  .client-logo{
+    width:66px; height:66px;
+    border-radius:50%;
+    border:2px solid var(--white);
+    background:linear-gradient(150deg, #232323 0%, #0d0d0d 70%);
+    display:flex; align-items:center; justify-content:center;
+    font-weight:800;
+    font-size:14px;
+  }
+  .client-name{ font-size:15px; }
+  .client-name strong{ font-weight:800; }
+  .client-name span{ color:var(--dim); }
+
+  /* ---------- ABOUT ---------- */
+  .about-photo{
+    width:92px; height:92px;
+    border-radius:50%;
+    margin:0 auto 22px;
+    border:2px solid var(--white);
+    background:linear-gradient(150deg, #232323 0%, #0d0d0d 70%);
+  }
+  .about-text{
+    font-size:15px;
+    font-weight:500;
+    line-height:1.75;
+    color:var(--dim);
+    max-width:460px;
+    margin:0 auto;
+  }
+
+  /* ---------- CTA ---------- */
+  .cta-text{
+    font-size:22px;
+    font-weight:800;
+    max-width:360px;
+    margin:0 auto;
+    line-height:1.4;
+  }
+
+  .contact-row{
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    margin-top:30px;
+    flex-wrap:wrap;
+  }
+  .contact-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:13px 24px;
+    border-radius:100px;
+    border:1.5px solid var(--line);
+    font-size:14px;
+    font-weight:700;
+    transition:background .25s ease, color .25s ease;
+    position:relative;
+  }
+  .contact-btn svg{ width:15px; height:15px; fill:var(--text); transition:fill .25s ease; }
+  .contact-btn:hover{ background:var(--white); color:var(--bg); }
+  .contact-btn:hover svg{ fill:var(--bg); }
+  .copy-tag{
+    position:absolute;
+    top:-30px; left:50%;
+    transform:translateX(-50%);
+    font-size:11.5px;
+    font-weight:600;
+    color:var(--dim);
+    opacity:0;
+    transition:opacity .25s ease;
+    white-space:nowrap;
+  }
+  .copy-tag.show{ opacity:1; }
+
+  .handle{
+    display:inline-block;
+    margin-top:32px;
+    font-size:14.5px;
+    font-weight:700;
+    color:var(--text);
+    opacity:0.85;
+    transition:opacity .25s ease;
+  }
+  .handle:hover{ opacity:1; }
+
+  .footer-note{
+    margin-top:60px;
+    font-size:11.5px;
+    color:#555;
+    letter-spacing:0.03em;
+  }
+
+  :focus-visible{ outline:2px solid var(--white); outline-offset:3px; }
+
+  @media (max-width:640px){
+    .box{ padding:28px 16px; }
+    .video-item{ width:150px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ transition:none !important; }
+    html{ scroll-behavior:auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="glow"></div>
+
+  <section>
+    <div class="avatar">MR</div>
+    <div class="name">Matheus R.</div>
+    <br>
+    <a href="mailto:editor.matheusr@gmail.com" class="email-link">editor.matheusr@gmail.com</a>
+  </section>
+
+  <div class="dash-title">- Vertical short-form -</div>
+  <section class="box">
+    <div class="video-row">
+      <div class="video-item">
+        <div class="video-title">Talking Head Reel</div>
+        <div class="thumb vertical"><div class="thumb-lines"></div><div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+      </div>
+      <div class="video-item">
+        <div class="video-title">Talking Head Reel</div>
+        <div class="thumb vertical"><div class="thumb-lines"></div><div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+      </div>
+      <div class="video-item">
+        <div class="video-title">Podcast Clip Edit</div>
+        <div class="thumb vertical"><div class="thumb-lines"></div><div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+      </div>
+      <div class="video-item">
+        <div class="video-title">Podcast Clip Edit</div>
+        <div class="thumb vertical"><div class="thumb-lines"></div><div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+      </div>
+      <div class="video-item">
+        <div class="video-title">Interview</div>
+        <div class="thumb vertical"><div class="thumb-lines"></div><div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="dash-title">- Horizontal short-form -</div>
+  <section class="box">
+    <div class="single-video">
+      <div class="video-title">Brand Campaign</div>
+      <div class="thumb horizontal"><div class="thumb-lines"></div><div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+    </div>
+  </section>
+
+  <div class="dash-title">- My clients -</div>
+  <section class="box">
+    <div class="client">
+      <div class="client-logo">CX</div>
+      <div class="client-name"><strong>Partner Channel</strong> <span>• coming soon</span></div>
+    </div>
+  </section>
+
+  <div class="dash-title">- About me: -</div>
+  <section class="box">
+    <div class="about-photo"></div>
+    <p class="about-text">
+      Hi! I'm Matheus, a video editor focused on cutting, pacing and storytelling. I work mainly with Premiere Pro and DaVinci Resolve, always looking to sharpen my craft and stay up to date with new techniques. I'm committed to delivering organized, high-quality work with professionalism and attention to detail.
+    </p>
+  </section>
+
+  <section style="margin-top:60px;">
+    <p class="cta-text">DM me, and let's work together :)</p>
+
+    <div class="contact-row">
+      <button class="contact-btn" id="discordBtn" onclick="copyDiscord(this)">
+        <svg viewBox="0 0 24 24"><path d="M20.3 5.4A17.8 17.8 0 0015.8 4l-.3.6c1.7.5 2.7 1.2 3.7 1.9-1.6-.8-3.2-1.3-4.7-1.5a11 11 0 00-4.9 0c-1.5.2-3.1.7-4.7 1.5 1-.7 2.2-1.5 3.7-2L8.2 4a17.8 17.8 0 00-4.5 1.4C1.6 9.7 1 13.9 1.3 18a17.5 17.5 0 005.2 2.6l.7-1.2c-.9-.3-1.7-.7-2.5-1.2.2.1.4.3.7.4a12.8 12.8 0 0013.2 0l.7-.4c-.8.5-1.6.9-2.5 1.2l.7 1.2A17.5 17.5 0 0022.7 18c.4-4.7-.9-8.9-2.4-12.6zM8.7 15.4c-.9 0-1.7-.9-1.7-2s.8-2 1.7-2 1.7.9 1.7 2-.8 2-1.7 2zm6.6 0c-.9 0-1.7-.9-1.7-2s.8-2 1.7-2 1.7.9 1.7 2-.8 2-1.7 2z"/></svg>
+        Discord
+        <span class="copy-tag" id="copyTag">ID copied!</span>
+      </button>
+      <a href="mailto:editor.matheusr@gmail.com" class="contact-btn">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 2v.01L12 13 4 6.01V6h16zM4 18V8.24l7.4 6.16a1 1 0 001.2 0L20 8.24V18H4z"/></svg>
+        Email
+      </a>
+    </div>
+
+    <a href="https://x.com/MatheusREditor" target="_blank" rel="noopener" class="handle">@MatheusREditor</a>
+  </section>
+
+  <div class="footer-note">Edited with care, frame by frame</div>
+</div>
+
+<script>
+  function copyDiscord(btn){
+    navigator.clipboard.writeText('263122436734582785').then(() => {
+      const tag = document.getElementById('copyTag');
+      tag.classList.add('show');
+      setTimeout(() => tag.classList.remove('show'), 1600);
+    });
+  }
+</script>
+
+</body>
+</html>

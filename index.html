@@ -159,6 +159,43 @@
   }
   .hero-formats .fmt::before{ content:'—'; color:var(--muted); }
 
+  /* ---------- ALL PROJECTS MODAL ---------- */
+  .modal-overlay{
+    position:fixed; inset:0; z-index:300;
+    background:rgba(6,4,12,0.78);
+    backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+    display:none; align-items:flex-start; justify-content:center;
+    padding:90px 24px 40px; overflow-y:auto;
+  }
+  .modal-overlay.open{ display:flex; }
+  body.modal-lock{ overflow:hidden; }
+  .modal-panel{
+    background:var(--panel); border:1px solid var(--line); border-radius:16px;
+    max-width:960px; width:100%; padding:28px;
+    box-shadow:0 24px 60px -20px rgba(0,0,0,0.6);
+  }
+  .modal-header{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:24px;
+  }
+  .modal-header h3{
+    font-family:var(--display); font-weight:700; font-size:20px;
+  }
+  .modal-close{
+    width:36px; height:36px; border-radius:50%; border:1px solid var(--line);
+    background:none; color:var(--muted); display:flex; align-items:center; justify-content:center;
+    cursor:pointer; transition:all .2s ease; flex-shrink:0;
+  }
+  .modal-close:hover{ color:#fff; background:var(--accent); border-color:var(--accent); }
+  .modal-close svg{ width:16px; height:16px; }
+  #modalGrid{ margin-bottom:0; }
+
+  @media (max-width:640px){
+    .modal-overlay{ padding:76px 12px 24px; }
+    .modal-panel{ padding:18px; border-radius:12px; }
+    .modal-header h3{ font-size:17px; }
+  }
+
   /* ---------- SECTION HEADS ---------- */
   section{ padding:120px 0; border-bottom:1px solid var(--line); }
   .section-head{
@@ -402,10 +439,22 @@
     <p id="workEmpty" style="display:none; text-align:center; color:var(--muted); font-family:var(--mono); font-size:13px; padding:40px 0;">No videos in this category yet — check back soon.</p>
 
     <div class="work-more">
-      <a href="#" class="btn btn-ghost">View all projects</a>
+      <button type="button" class="btn btn-ghost" id="viewAllBtn">View all projects</button>
     </div>
   </div>
 </section>
+
+<div class="modal-overlay" id="videoModal">
+  <div class="modal-panel">
+    <div class="modal-header">
+      <h3>All Projects</h3>
+      <button type="button" class="modal-close" id="closeModalBtn" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="work-grid" id="modalGrid"></div>
+  </div>
+</div>
 
 <section id="about">
   <div class="wrap about">
@@ -530,7 +579,7 @@
   });
 
   // Load YouTube embed on click (keeps page light — nothing loads until requested)
-  document.querySelectorAll('.work-card[data-yt]').forEach(card => {
+  function makeVideoLoadable(card){
     card.addEventListener('click', () => {
       if(card.dataset.loaded) return;
       card.dataset.loaded = '1';
@@ -545,6 +594,41 @@
       card.querySelector('.work-play').remove();
       card.appendChild(iframe);
     });
+  }
+  document.querySelectorAll('#workGrid .work-card[data-yt]').forEach(makeVideoLoadable);
+
+  // "View all projects" modal — every video on the site, scrollable, tap to play
+  const videoModal = document.getElementById('videoModal');
+  const modalGrid = document.getElementById('modalGrid');
+  const viewAllBtn = document.getElementById('viewAllBtn');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  let modalPopulated = false;
+
+  function openModal(){
+    if(!modalPopulated){
+      document.querySelectorAll('#workGrid .work-card[data-yt]').forEach(card => {
+        const clone = card.cloneNode(true);
+        clone.classList.remove('hide');
+        delete clone.dataset.loaded;
+        modalGrid.appendChild(clone);
+        makeVideoLoadable(clone);
+      });
+      modalPopulated = true;
+    }
+    videoModal.classList.add('open');
+    document.body.classList.add('modal-lock');
+  }
+  function closeModal(){
+    videoModal.classList.remove('open');
+    document.body.classList.remove('modal-lock');
+  }
+  viewAllBtn.addEventListener('click', openModal);
+  closeModalBtn.addEventListener('click', closeModal);
+  videoModal.addEventListener('click', (e) => {
+    if(e.target === videoModal) closeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape' && videoModal.classList.contains('open')) closeModal();
   });
 
   // Discord copy-to-clipboard (ID: 263122436734582785)

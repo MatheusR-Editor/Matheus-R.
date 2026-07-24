@@ -247,15 +247,6 @@
   .stat-num{ font-family:var(--display); font-size:32px; font-weight:700; background:linear-gradient(135deg, var(--fg), var(--accent-2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
   .stat-label{ font-family:var(--mono); font-size:11px; color:var(--muted); text-transform:uppercase; margin-top:4px; }
 
-  /* ---------- SOFTWARE / TOOLS strip ---------- */
-  .tools{ padding:56px 0; }
-  .tools-row{
-    display:flex; flex-wrap:wrap; gap:14px 0; justify-content:space-between;
-    font-family:var(--mono); font-size:13px; color:var(--muted);
-  }
-  .tools-row span{ padding:0 24px; border-right:1px solid var(--line); }
-  .tools-row span:last-child{ border-right:none; }
-
   /* ---------- CLIENTS ---------- */
   .clients-track-wrap{
     overflow:hidden; margin-top:56px;
@@ -322,8 +313,6 @@
     .work-wide{ grid-column:span 2; }
     .about{ grid-template-columns:1fr; }
     .about-photo{ max-width:280px; }
-    .tools-row{ justify-content:flex-start; gap:0; }
-    .tools-row span{ padding:8px 20px 8px 0; border-right:none; }
   }
   @media (max-width:520px){
     .wrap, nav, .hero{ padding-left:20px; padding-right:20px; }
@@ -443,16 +432,6 @@
     </div>
   </div>
 </section>
-
-<div class="tools wrap">
-  <div class="tools-row">
-    <span>Premiere Pro</span>
-    <span>After Effects</span>
-    <span>DaVinci Resolve</span>
-    <span>Photoshop</span>
-    <span>Audition</span>
-  </div>
-</div>
 
 <section id="clients">
   <div class="wrap">

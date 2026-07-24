@@ -237,12 +237,6 @@
     background:linear-gradient(160deg, #221c38 0%, #0d0a15 100%);
     position:relative; overflow:hidden;
   }
-  .about-photo::after{
-    content:'MR'; position:absolute; inset:0;
-    display:flex; align-items:center; justify-content:center;
-    font-family:var(--display); font-size:64px; font-weight:700;
-    color:rgba(196,181,253,0.14); letter-spacing:-0.02em;
-  }
   .about-text p{ color:var(--muted); font-size:16px; margin-bottom:20px; max-width:520px; }
   .about-text p strong{ color:var(--accent-2); font-weight:600; }
   .about-stats{
@@ -408,11 +402,11 @@
     </div>
 
     <div class="work-grid" id="workGrid">
-      <div class="work-card" data-cat="shorts" data-yt="BP1Sq224xaM"><div class="work-thumb" style="background-image:url('https://i.ytimg.com/vi/BP1Sq224xaM/hqdefault.jpg')"></div><div class="work-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><div class="work-meta"><span class="work-cat">Shorts</span><span class="work-num">01</span></div></div>
-      <div class="work-card" data-cat="shorts" data-yt="a83VtY4RFlE"><div class="work-thumb" style="background-image:url('https://i.ytimg.com/vi/a83VtY4RFlE/hqdefault.jpg')"></div><div class="work-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><div class="work-meta"><span class="work-cat">Shorts</span><span class="work-num">02</span></div></div>
+      <div class="work-card" data-cat="shorts talking" data-yt="BP1Sq224xaM"><div class="work-thumb" style="background-image:url('https://i.ytimg.com/vi/BP1Sq224xaM/hqdefault.jpg')"></div><div class="work-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><div class="work-meta"><span class="work-cat">Shorts</span><span class="work-num">01</span></div></div>
+      <div class="work-card" data-cat="shorts talking" data-yt="a83VtY4RFlE"><div class="work-thumb" style="background-image:url('https://i.ytimg.com/vi/a83VtY4RFlE/hqdefault.jpg')"></div><div class="work-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><div class="work-meta"><span class="work-cat">Shorts</span><span class="work-num">02</span></div></div>
       <div class="work-card work-wide" data-cat="longform" data-yt="Zv26aaVYIys"><div class="work-thumb" style="background-image:url('https://i.ytimg.com/vi/Zv26aaVYIys/hqdefault.jpg')"></div><div class="work-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><div class="work-meta"><span class="work-cat">Showreel</span><span class="work-num">03</span></div></div>
-      <div class="work-card" data-cat="shorts" data-yt="LYiNmh9hcSY"><div class="work-thumb" style="background-image:url('https://i.ytimg.com/vi/LYiNmh9hcSY/hqdefault.jpg')"></div><div class="work-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><div class="work-meta"><span class="work-cat">Shorts</span><span class="work-num">04</span></div></div>
-      <div class="work-card" data-cat="shorts" data-yt="zO4KMhebvWs"><div class="work-thumb" style="background-image:url('https://i.ytimg.com/vi/zO4KMhebvWs/hqdefault.jpg')"></div><div class="work-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><div class="work-meta"><span class="work-cat">Shorts</span><span class="work-num">05</span></div></div>
+      <div class="work-card" data-cat="shorts talking" data-yt="LYiNmh9hcSY"><div class="work-thumb" style="background-image:url('https://i.ytimg.com/vi/LYiNmh9hcSY/hqdefault.jpg')"></div><div class="work-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><div class="work-meta"><span class="work-cat">Shorts</span><span class="work-num">04</span></div></div>
+      <div class="work-card" data-cat="shorts talking" data-yt="zO4KMhebvWs"><div class="work-thumb" style="background-image:url('https://i.ytimg.com/vi/zO4KMhebvWs/hqdefault.jpg')"></div><div class="work-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><div class="work-meta"><span class="work-cat">Shorts</span><span class="work-num">05</span></div></div>
     </div>
 
     <p id="workEmpty" style="display:none; text-align:center; color:var(--muted); font-family:var(--mono); font-size:13px; padding:40px 0;">No videos in this category yet — check back soon.</p>
@@ -425,7 +419,7 @@
 
 <section id="about">
   <div class="wrap about">
-    <div class="about-photo"></div>
+    <div class="about-photo"><img src="avatar.png" alt="Matheus R." style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" /></div>
     <div class="about-text">
       <div class="section-label">About</div>
       <h2 style="margin-bottom:24px;">Whatever the format, the goal doesn't change.</h2>
@@ -538,7 +532,8 @@
       const f = btn.dataset.filter;
       let visibleCount = 0;
       cards.forEach(card => {
-        if(f === 'all' || card.dataset.cat === f){
+        const cats = card.dataset.cat.split(' ');
+        if(f === 'all' || cats.includes(f)){
           card.classList.remove('hide');
           visibleCount++;
         } else {

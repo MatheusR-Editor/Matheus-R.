@@ -94,7 +94,13 @@
     cursor:pointer; transition:all .2s ease;
   }
   .lang-toggle button.active{ background:var(--accent); color:#fff; }
-  .nav-mobile-toggle{ display:none; }
+  .nav-mobile-toggle{
+    display:none;
+    width:36px; height:36px; border-radius:8px; border:1px solid var(--line);
+    background:none; color:var(--fg); align-items:center; justify-content:center;
+    cursor:pointer; flex-shrink:0;
+  }
+  .nav-mobile-toggle svg{ width:18px; height:18px; }
 
   /* ---------- HERO ---------- */
   .hero{
@@ -358,7 +364,20 @@
 
   /* ---------- RESPONSIVE ---------- */
   @media (max-width:860px){
-    .nav-links{ display:none; }
+    .nav-links{
+      display:none;
+      position:absolute; top:100%; left:0; right:0;
+      background:var(--bg); border-bottom:1px solid var(--line);
+      flex-direction:column; gap:0; padding:8px 32px 16px;
+    }
+    .nav-links.mobile-open{ display:flex; }
+    .nav-links li{ width:100%; }
+    .nav-links a{
+      display:block; padding:14px 0; font-size:13px;
+      border-bottom:1px solid var(--line);
+    }
+    .nav-links li:last-child a{ border-bottom:none; }
+    .nav-mobile-toggle{ display:flex; }
     .work-grid{ grid-template-columns:repeat(2,1fr); }
     .work-wide{ grid-column:span 2; }
     .about{ grid-template-columns:1fr; }
@@ -398,6 +417,9 @@
         <button class="active" data-lang="en">EN</button>
         <button data-lang="pt">PT</button>
       </div>
+      <button type="button" class="nav-mobile-toggle" id="mobileMenuToggle" aria-label="Open menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
     </div>
   </nav>
 </header>
@@ -666,6 +688,26 @@
       document.querySelectorAll('.lang-toggle button').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
     });
+  });
+
+  // Mobile nav menu
+  const mobileToggle = document.getElementById('mobileMenuToggle');
+  const navLinksEl = document.querySelector('.nav-links');
+  function closeMobileMenu(){
+    navLinksEl.classList.remove('mobile-open');
+    mobileToggle.setAttribute('aria-expanded', 'false');
+  }
+  mobileToggle.addEventListener('click', () => {
+    const isOpen = navLinksEl.classList.toggle('mobile-open');
+    mobileToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+  navLinksEl.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobileMenu));
+  document.addEventListener('click', (e) => {
+    if(navLinksEl.classList.contains('mobile-open') &&
+       !navLinksEl.contains(e.target) &&
+       !mobileToggle.contains(e.target)){
+      closeMobileMenu();
+    }
   });
 </script>
 

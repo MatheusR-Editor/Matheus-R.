@@ -288,7 +288,18 @@
   }
 
   /* ---------- ABOUT ---------- */
-  .about{ display:grid; grid-template-columns:0.9fr 1.1fr; gap:64px; align-items:center; }
+  .about{
+    display:grid;
+    grid-template-columns:0.9fr 1.1fr;
+    grid-template-rows:auto 1fr;
+    grid-template-areas:
+      "photo heading"
+      "photo body";
+    gap:20px 64px; align-items:center;
+  }
+  .about-photo{ grid-area:photo; }
+  .about-heading{ grid-area:heading; align-self:end; }
+  .about-body{ grid-area:body; align-self:start; }
   .about-photo{
     aspect-ratio:4/5; border-radius:12px; border:1px solid var(--line);
     background:linear-gradient(160deg, #221c38 0%, #0d0a15 100%);
@@ -393,8 +404,20 @@
     .nav-mobile-toggle{ display:flex; }
     .work-grid{ grid-template-columns:repeat(2,1fr); }
     .work-wide{ grid-column:span 2; }
-    .about{ grid-template-columns:1fr; }
-    .about-photo{ max-width:280px; }
+    .about{
+      grid-template-columns:72px 1fr;
+      grid-template-rows:auto auto;
+      grid-template-areas:
+        "photo heading"
+        "body body";
+      gap:14px 16px; align-items:center;
+    }
+    .about-heading{ align-self:center; }
+    .about-body{ align-self:start; }
+    .about-photo{
+      max-width:none; aspect-ratio:1/1; border-radius:50%;
+    }
+    .about-heading h2{ font-size:20px; line-height:1.2; }
   }
   @media (max-width:430px){
     nav{ padding:14px 12px; }
@@ -512,9 +535,11 @@
 <section id="about">
   <div class="wrap about">
     <div class="about-photo"><img src="avatar.png" alt="Matheus R." style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" /></div>
-    <div class="about-text">
+    <div class="about-heading">
       <div class="section-label" data-i18n="about.label">About</div>
-      <h2 style="margin-bottom:24px;" data-i18n="about.heading">Whatever the format, the goal doesn't change.</h2>
+      <h2 data-i18n="about.heading">Whatever the format, the goal doesn't change.</h2>
+    </div>
+    <div class="about-body">
       <p data-i18n="about.p1">I got into editing the same way most people do — cutting clips for fun, then realizing every part of it, pacing, sound, color, could be pushed further. <strong>That curiosity is why I never settled into one niche.</strong></p>
       <p data-i18n="about.p2">Today I work across formats: fast-paced shorts, clean talking-head content, narrative long-form, and brand pieces that need to sell without feeling like an ad. Each one has its own rhythm, and switching between them is the part of the job I enjoy most.</p>
       <div class="about-stats">

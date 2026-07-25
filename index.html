@@ -364,11 +364,18 @@
 
   /* ---------- RESPONSIVE ---------- */
   @media (max-width:860px){
+    nav{ padding:16px 16px; }
+    .logo{ font-size:13px; gap:7px; }
+    .logo-badge{ width:28px; height:28px; font-size:13px; border-radius:8px; }
+    .nav-right{ gap:8px; }
+    .nav-pill{ padding:7px 11px; font-size:11px; gap:5px; }
+    .lang-toggle button{ padding:7px 10px; font-size:10px; }
+    .nav-mobile-toggle{ width:32px; height:32px; }
     .nav-links{
       display:none;
       position:absolute; top:100%; left:0; right:0;
       background:var(--bg); border-bottom:1px solid var(--line);
-      flex-direction:column; gap:0; padding:8px 32px 16px;
+      flex-direction:column; gap:0; padding:8px 20px 16px;
     }
     .nav-links.mobile-open{ display:flex; }
     .nav-links li{ width:100%; }
@@ -382,6 +389,14 @@
     .work-wide{ grid-column:span 2; }
     .about{ grid-template-columns:1fr; }
     .about-photo{ max-width:280px; }
+  }
+  @media (max-width:430px){
+    nav{ padding:14px 12px; }
+    .logo{ font-size:12px; gap:6px; }
+    .nav-right{ gap:6px; }
+    .nav-pill .pill-label{ display:none; }
+    .nav-pill{ padding:8px; border-radius:50%; }
+    .lang-toggle button{ padding:6px 8px; }
   }
   @media (max-width:520px){
     .wrap, nav, .hero{ padding-left:20px; padding-right:20px; }
@@ -411,7 +426,7 @@
     <div class="nav-right">
       <a href="https://ytjobs.co/talent/profile/592534?r=954" target="_blank" rel="noopener" class="nav-pill">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7h-3V5.5A2.5 2.5 0 0 0 14.5 3h-5A2.5 2.5 0 0 0 7 5.5V7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM9 5.5A.5.5 0 0 1 9.5 5h5a.5.5 0 0 1 .5.5V7H9V5.5z"/></svg>
-        YTJobs
+        <span class="pill-label">YTJobs</span>
       </a>
       <div class="lang-toggle">
         <button class="active" data-lang="en">EN</button>

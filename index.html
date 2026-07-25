@@ -290,23 +290,23 @@
   /* ---------- ABOUT ---------- */
   .about{
     display:grid;
-    grid-template-columns:0.9fr 1.1fr;
-    grid-template-rows:auto 1fr;
+    grid-template-columns:96px 1fr;
+    grid-template-rows:auto auto;
     grid-template-areas:
       "photo heading"
-      "photo body";
-    gap:20px 64px; align-items:center;
+      "body body";
+    gap:24px 28px; align-items:center;
   }
   .about-photo{ grid-area:photo; }
-  .about-heading{ grid-area:heading; align-self:end; }
+  .about-heading{ grid-area:heading; align-self:center; }
   .about-body{ grid-area:body; align-self:start; }
   .about-photo{
-    aspect-ratio:4/5; border-radius:12px; border:1px solid var(--line);
+    aspect-ratio:1/1; border-radius:50%; border:1px solid var(--line);
     background:linear-gradient(160deg, #221c38 0%, #0d0a15 100%);
     position:relative; overflow:hidden;
   }
-  .about-text p{ color:var(--muted); font-size:16px; margin-bottom:20px; max-width:520px; }
-  .about-text p strong{ color:var(--accent-2); font-weight:600; }
+  .about-body p{ color:var(--muted); font-size:16px; margin-bottom:20px; max-width:520px; }
+  .about-body p strong{ color:var(--accent-2); font-weight:600; }
   .about-stats{
     display:flex; gap:40px; margin-top:36px; padding-top:32px;
     border-top:1px solid var(--line);

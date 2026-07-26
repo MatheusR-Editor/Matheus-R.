@@ -9,7 +9,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root{
+    /* ===== PALETA DE CORES E FONTES DO SITE =====
+     Aqui ficam as "variáveis" (cores e fontes) usadas em TODO o site.
+     Se quiser trocar o roxo por outra cor, ou mudar a fonte, é só mexer aqui
+     que muda em todo lugar de uma vez só. */
+:root{
     --bg: #0a0810;
     --panel: #15111f;
     --line: #2a2340;
@@ -23,8 +27,10 @@
     --body: 'Inter', sans-serif;
   }
 
+  /* Reset básico: tira espaçamentos padrão do navegador pra começar do zero */
   *{ margin:0; padding:0; box-sizing:border-box; }
   html{ scroll-behavior:smooth; }
+  /* Fundo geral da página: cor escura de base + dois brilhos roxos bem sutis nos cantos */
   body{
     background:
       radial-gradient(ellipse 900px 500px at 15% 0%, rgba(139,92,246,0.10), transparent 60%),
@@ -39,8 +45,12 @@
   ul{ list-style:none; }
   img{ max-width:100%; display:block; }
 
+  /* Cor de destaque quando o visitante seleciona um texto do site (Ctrl+C) */
   ::selection{ background:var(--accent); color:#fff; }
 
+  /* ---------- AMBIENT BACKGROUND ANIMATION ---------- */
+  /* As 3 "bolhas" roxas desfocadas que ficam pulsando bem devagar atrás de tudo.
+     É só decoração, fica atrás do conteúdo (z-index:-1) e não atrapalha cliques. */
   /* ---------- AMBIENT BACKGROUND ANIMATION ---------- */
   .ambient-glow{
     position:fixed; inset:0; z-index:-1;
@@ -72,8 +82,11 @@
   }
 
 
+  /* Largura máxima do conteúdo (1100px) e centralização — usada em quase toda seção */
   .wrap{ max-width:1100px; margin:0 auto; padding:0 32px; }
 
+  /* ---------- NAV ---------- */
+  /* Menu do topo do site (logo, links Work/About/Clients/Contact, botão YTJobs, EN/PT) */
   /* ---------- NAV ---------- */
   header{
     position:fixed; top:0; left:0; right:0; z-index:100;
@@ -86,11 +99,13 @@
     display:flex; align-items:center; justify-content:space-between;
     padding:20px 32px; max-width:1100px; margin:0 auto;
   }
+  /* Logo "MATHEUS R." no canto esquerdo do menu */
   .logo{
     display:flex; align-items:center; gap:10px;
     font-family:var(--display); font-weight:700; font-size:15px;
     letter-spacing:0.08em;
   }
+  /* Quadradinho roxo com a letra "M" ao lado do nome */
   .logo-badge{
     width:32px; height:32px; border-radius:9px;
     background:linear-gradient(145deg, var(--accent-2), var(--accent));
@@ -100,6 +115,7 @@
     flex-shrink:0;
   }
   .logo span{ color:var(--muted); }
+  /* Links do menu: Work, About, Clients, Contact */
   .nav-links{ display:flex; gap:36px; }
   .nav-links a{
     font-family:var(--mono); font-size:12px; letter-spacing:0.05em;
@@ -107,7 +123,9 @@
     transition:color .2s ease;
   }
   .nav-links a:hover{ color:var(--accent-2); }
+  /* Agrupa o botão YTJobs + o EN/PT + o menu hambúrguer, do lado direito do menu */
   .nav-right{ display:flex; align-items:center; gap:14px; }
+  /* Botão em formato de pílula (usado no botão "YTJobs" do menu) */
   .nav-pill{
     font-family:var(--mono); font-size:12px; color:var(--fg);
     border:1px solid var(--line); padding:8px 16px; border-radius:100px;
@@ -116,6 +134,7 @@
   }
   .nav-pill:hover{ border-color:var(--accent); color:var(--accent-2); }
   .nav-pill svg{ width:13px; height:13px; }
+  /* Botão EN / PT de trocar o idioma do site */
   .lang-toggle{
     display:flex; border:1px solid var(--line); border-radius:100px; overflow:hidden;
     font-family:var(--mono); font-size:11px;
@@ -125,6 +144,7 @@
     cursor:pointer; transition:all .2s ease;
   }
   .lang-toggle button.active{ background:var(--accent); color:#fff; }
+  /* Botão de menu (☰) que só aparece quando a tela é estreita (celular) */
   .nav-mobile-toggle{
     display:none;
     width:36px; height:36px; border-radius:8px; border:1px solid var(--line);
@@ -134,6 +154,9 @@
   .nav-mobile-toggle svg{ width:18px; height:18px; }
 
   /* ---------- HERO ---------- */
+  /* Essa é a primeira seção da página, o "banner" grande com o título principal */
+  /* ---------- HERO ---------- */
+  /* Caixa que ocupa quase a tela toda no topo do site */
   .hero{
     position:relative;
     min-height:100svh;
@@ -141,6 +164,7 @@
     padding:140px 32px 80px;
     overflow:hidden;
   }
+  /* Brilho roxo desfocado que fica atrás do título, dando profundidade */
   .hero-glow{
     position:absolute; top:32%; left:50%;
     width:760px; height:760px;
@@ -159,17 +183,23 @@
     content:''; width:6px; height:6px; border-radius:50%;
     background:var(--accent); box-shadow:0 0 12px 2px var(--accent-soft); display:inline-block;
   }
+  /* Título gigante "ONE EDITOR. EVERY FORMAT." */
   h1.hero-title{
     font-family:var(--display); font-weight:700;
     font-size:clamp(48px, 9vw, 108px);
     line-height:0.96; letter-spacing:-0.02em;
     max-width:900px;
   }
+  /* Parágrafo de apresentação, logo abaixo do título grande */
   .hero-sub{
     margin-top:28px; max-width:520px;
     color:var(--muted); font-size:17px; line-height:1.6;
   }
+  /* Fileira com os botões "View my work" e "Get in touch" */
   .hero-cta{ margin-top:44px; display:flex; gap:16px; flex-wrap:wrap; }
+  /* ----- BOTÕES -----
+     Estilo BASE de todos os botões do site (tamanho, borda arredondada, fonte).
+     As variações de cor de cada tipo de botão vêm logo abaixo (.btn-solid / .btn-ghost) */
   .btn{
     font-family:var(--mono); font-size:13px; letter-spacing:0.04em;
     padding:14px 28px; border-radius:100px;
@@ -179,11 +209,14 @@
     display:inline-flex; align-items:center; gap:8px;
     text-decoration:none;
   }
+  /* Botão preenchido com o gradiente roxo — é o botão de destaque/principal (ex: "View my work") */
   .btn-solid{ background:linear-gradient(135deg, var(--accent-2), var(--accent)); color:#100b1d; border-color:transparent; box-shadow:0 8px 24px -8px rgba(139,92,246,0.55); }
   .btn-solid:hover{ filter:brightness(1.12); transform:translateY(-1px); }
+  /* Botão só com contorno, sem preenchimento — é o botão secundário (ex: "Get in touch") */
   .btn-ghost{ color:var(--fg); border-color:var(--line); }
   .btn-ghost:hover{ border-color:var(--accent); color:var(--accent-2); }
 
+  /* Lista "Formats I cover" (Shorts, Talking-head, Long-form) embaixo dos botões do hero */
   .hero-formats{
     margin-top:90px; display:flex; flex-wrap:wrap; gap:0;
     border-top:1px solid var(--line);
@@ -199,6 +232,9 @@
   .hero-formats .fmt::before{ content:'—'; color:var(--muted); }
 
   /* ---------- ALL PROJECTS MODAL ---------- */
+  /* Pop-up que abre ao clicar em "View all projects", com todos os vídeos do site */
+  /* ---------- ALL PROJECTS MODAL ---------- */
+  /* Fundo escuro (com blur) que cobre a tela toda quando o pop-up está aberto */
   .modal-overlay{
     position:fixed; inset:0; z-index:300;
     background:rgba(6,4,12,0.78);
@@ -210,6 +246,7 @@
   }
   .modal-overlay.open{ opacity:1; pointer-events:auto; }
   body.modal-lock{ overflow:hidden; }
+  /* A caixa roxo-escura do pop-up em si, onde ficam o título e a grade de vídeos */
   .modal-panel{
     background:var(--panel); border:1px solid var(--line); border-radius:16px;
     max-width:960px; width:100%; padding:28px;
@@ -220,6 +257,7 @@
   .modal-overlay.open .modal-panel{
     opacity:1; transform:translateY(0) scale(1);
   }
+  /* Linha de cima do pop-up: título "All Projects" + botão de fechar */
   .modal-header{
     display:flex; align-items:center; justify-content:space-between;
     margin-bottom:24px;
@@ -227,6 +265,7 @@
   .modal-header h3{
     font-family:var(--display); font-weight:700; font-size:20px;
   }
+  /* Botão "X" redondo de fechar o pop-up */
   .modal-close{
     width:36px; height:36px; border-radius:50%; border:1px solid var(--line);
     background:none; color:var(--muted); display:flex; align-items:center; justify-content:center;
@@ -247,15 +286,21 @@
   }
 
   /* ---------- SECTION HEADS ---------- */
+  /* Estilo padrão usado no topo de cada seção (About, Clients, Contact...): 
+     aquele textinho pequeno roxo + o título maior ao lado */
+  /* ---------- SECTION HEADS ---------- */
+  /* Espaçamento vertical padrão entre cada seção do site + linha divisória embaixo */
   section{ padding:120px 0; border-bottom:1px solid var(--line); }
   .section-head{
     display:flex; justify-content:space-between; align-items:flex-end;
     margin-bottom:56px; gap:24px; flex-wrap:wrap;
   }
+  /* O textinho pequeno e roxo tipo "ABOUT", "CLIENTS", "CONTACT" */
   .section-label{
     font-family:var(--mono); font-size:12px; color:var(--accent-2);
     letter-spacing:0.15em; text-transform:uppercase; margin-bottom:16px;
   }
+  /* Título de cada seção (menor que o título gigante do hero) */
   h2{
     font-family:var(--display); font-weight:700;
     font-size:clamp(28px, 4vw, 42px); letter-spacing:-0.01em;
@@ -263,9 +308,14 @@
   .section-note{ max-width:340px; color:var(--muted); font-size:14px; }
 
   /* ---------- WORK / FILTER ---------- */
+  /* Seção "Our Work": os botões de filtro (All, Shorts, Talking-head, Long-form)
+     e a grade de vídeos logo abaixo */
+  /* ---------- WORK / FILTER ---------- */
+  /* Fileira com os botões de filtro (All / Shorts / Talking-head / Long-form) */
   .filters{
     display:flex; flex-wrap:wrap; gap:10px; margin-bottom:48px;
   }
+  /* Cada botão de filtro individual */
   .filter-btn{
     font-family:var(--mono); font-size:12px; letter-spacing:0.03em;
     padding:9px 18px; border-radius:100px; border:1px solid var(--line);
@@ -275,10 +325,12 @@
   .filter-btn:hover{ color:var(--fg); border-color:var(--accent); }
   .filter-btn.active{ background:var(--accent); color:#fff; border-color:var(--accent); }
 
+  /* A grade (grid) onde os cards de vídeo aparecem */
   .work-grid{
     display:grid; grid-template-columns:repeat(3, 1fr); gap:18px;
     grid-auto-flow:dense;
   }
+  /* Cada quadradinho/card de vídeo dentro da grade */
   .work-card{
     position:relative; aspect-ratio:9/16; border-radius:10px;
     background:var(--panel); border:1px solid var(--line);
@@ -288,6 +340,7 @@
   .work-card:hover{ border-color:var(--accent); transform:translateY(-3px); box-shadow:0 12px 32px -12px rgba(139,92,246,0.35); }
   .work-card[data-cat]{ }
   .work-card.hide{ display:none; }
+  /* A miniatura (thumbnail) de fundo de cada card, antes do vídeo carregar */
   .work-thumb{
     position:absolute; inset:0;
     background:
@@ -300,6 +353,7 @@
     position:absolute; inset:0; width:100%; height:100%;
     object-fit:cover; object-position:center;
   }
+  /* O botãozinho de play redondo no centro do card */
   .work-play{
     position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
     width:44px; height:44px; border-radius:50%;
@@ -309,6 +363,7 @@
     color:var(--accent-2); opacity:.9;
   }
   .work-play svg{ width:14px; height:14px; margin-left:2px; }
+  /* A faixa com a categoria ("Shorts", "Showreel"...) e o número do card, embaixo */
   .work-meta{
     position:absolute; left:0; right:0; bottom:0; padding:16px;
     display:flex; justify-content:space-between; align-items:flex-end;
@@ -317,13 +372,18 @@
   .work-cat{ font-family:var(--mono); font-size:11px; color:var(--muted); text-transform:uppercase; }
   .work-num{ font-family:var(--mono); font-size:11px; color:var(--muted); }
 
+  /* Faz o card do Showreel ficar mais largo, ocupando 2 colunas da grade */
   .work-wide{ grid-column:span 2; aspect-ratio:16/9; }
 
+  /* Espaço do botão "View all projects", embaixo da grade de vídeos */
   .work-more{
     margin-top:40px; text-align:center;
   }
 
   /* ---------- ABOUT ---------- */
+  /* Seção "Sobre": foto pequena + título ao lado, texto e números embaixo */
+  /* ---------- ABOUT ---------- */
+  /* Organiza a foto, o título e o texto da seção Sobre (usando grid-areas) */
   .about{
     display:grid;
     grid-template-columns:96px 1fr;
@@ -333,6 +393,7 @@
       ".     body";
     gap:24px 28px; align-items:center;
   }
+  /* A foto redonda do Matheus */
   .about-photo{ grid-area:photo; }
   .about-heading{ grid-area:heading; align-self:center; }
   .about-body{ grid-area:body; align-self:start; }
@@ -341,8 +402,10 @@
     background:linear-gradient(160deg, #221c38 0%, #0d0a15 100%);
     position:relative; overflow:hidden;
   }
+  /* Os parágrafos de texto da seção Sobre */
   .about-body p{ color:var(--muted); font-size:16px; margin-bottom:20px; max-width:520px; }
   .about-body p strong{ color:var(--accent-2); font-weight:600; }
+  /* Fileira com os números "4+ / 100% / 1" e suas legendas */
   .about-stats{
     display:flex; gap:40px; margin-top:36px; padding-top:32px;
     border-top:1px solid var(--line);
@@ -351,11 +414,15 @@
   .stat-label{ font-family:var(--mono); font-size:11px; color:var(--muted); text-transform:uppercase; margin-top:4px; }
 
   /* ---------- CLIENTS ---------- */
+  /* Seção "Clients": fileira de avatares que desliza sozinha (efeito carrossel) */
+  /* ---------- CLIENTS ---------- */
+  /* Esconde as bordas da fileira de avatares, criando um efeito de "sumir" nas pontas */
   .clients-track-wrap{
     overflow:hidden; margin-top:56px;
     -webkit-mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
     mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
   }
+  /* A fileira de avatares em si, que desliza automaticamente pra esquerda sem parar */
   .clients-track{
     display:flex; gap:44px; width:max-content;
     animation:scrollClients 28s linear infinite;
@@ -364,6 +431,7 @@
     display:flex; flex-direction:column; align-items:center; gap:10px;
     flex-shrink:0;
   }
+  /* Cada bolinha roxa com a letra do cliente (placeholder, trocar por foto real depois) */
   .client-avatar{
     width:64px; height:64px; border-radius:50%;
     border:1px solid var(--line);
@@ -381,10 +449,14 @@
   }
 
   /* ---------- CONTACT ---------- */
+  /* Última seção: título de contato, botões (e-mail, X, YTJobs) e o rodapé com os ícones */
+  /* ---------- CONTACT ---------- */
+  /* Caixa geral da seção de contato (texto centralizado) */
   .contact{ border-bottom:none; text-align:center; }
   .contact h2{ font-size:clamp(32px, 6vw, 56px); max-width:700px; margin:0 auto; }
   .contact .section-label{ display:flex; justify-content:center; }
   .contact-sub{ color:var(--muted); max-width:440px; margin:24px auto 40px; }
+  /* Os 3 botões de contato: "Send an email", "Message on X", "View on YTJobs" */
   .contact-cta{ display:flex; justify-content:center; gap:16px; margin-bottom:64px; flex-wrap:wrap; }
   .contact-links{
     display:flex; justify-content:center; gap:0; flex-wrap:wrap;
@@ -396,10 +468,12 @@
   }
   .contact-links a:hover{ color:var(--accent-2); }
 
+  /* Rodapé do site: texto de copyright + ícones sociais */
   footer{
     padding:48px 32px 32px; text-align:center;
     font-family:var(--mono); font-size:11px; color:var(--muted);
   }
+  /* Os ícones redondos do rodapé (e-mail, Discord, YouTube, X, YTJobs) */
   .footer-icons{ display:flex; justify-content:center; gap:16px; flex-wrap:wrap; }
   .footer-icons a{
     width:46px; height:46px; border-radius:50%;
@@ -416,6 +490,11 @@
   }
 
   /* ---------- RESPONSIVE ---------- */
+  /* Daqui pra baixo são só AJUSTES para telas menores (tablet/celular).
+     Não é um estilo novo, é a mesma coisa de cima só que reorganizada pra caber
+     numa tela estreita. */
+  /* ---------- RESPONSIVE ---------- */
+  /* Ajustes para quando a tela fica menor que 860px (tablets e celulares) */
   @media (max-width:860px){
     nav{ padding:16px 16px; }
     .logo{ font-size:13px; gap:7px; }
@@ -455,6 +534,7 @@
     }
     .about-heading h2{ font-size:20px; line-height:1.2; }
   }
+  /* Ajustes extras só para celulares bem pequenos (menos de 430px de largura) */
   @media (max-width:430px){
     nav{ padding:14px 12px; }
     .logo{ font-size:12px; gap:6px; }
@@ -477,12 +557,21 @@
   }
 </style>
 </head>
+<!-- ============================================================
+     Site portfólio do Matheus R. (editor de vídeo)
+     Estrutura da página, de cima pra baixo:
+     1. Menu (header)      4. About (Sobre)      7. Rodapé (footer)
+     2. Hero (banner)      5. Clients
+     3. Our Work + Pop-up  6. Contact
+     ============================================================ -->
 <body>
 
+<!-- Bolhas roxas animadas no fundo (só decoração, veja o CSS "ambient-glow") -->
 <div class="ambient-glow" aria-hidden="true">
   <span></span><span></span><span></span>
 </div>
 
+<!-- ===== MENU DO TOPO ===== -->
 <header>
   <nav>
     <a href="#home" class="logo"><span class="logo-badge">M</span>MATHEUS <span>R.</span></a>
@@ -508,6 +597,8 @@
   </nav>
 </header>
 
+
+<!-- ===== HERO (banner de abertura com o título grande) ===== -->
 <section class="hero" id="home">
   <div class="hero-glow"></div>
   <div class="hero-inner">
@@ -527,6 +618,8 @@
   </div>
 </section>
 
+
+<!-- ===== SEÇÃO "OUR WORK" (filtros + grade de vídeos) ===== -->
 <section id="work">
   <div class="wrap">
     <div class="section-head">
@@ -560,6 +653,8 @@
   </div>
 </section>
 
+
+<!-- ===== POP-UP "VIEW ALL PROJECTS" (fica escondido até clicar no botão) ===== -->
 <div class="modal-overlay" id="videoModal">
   <div class="modal-panel">
     <div class="modal-header">
@@ -572,6 +667,8 @@
   </div>
 </div>
 
+
+<!-- ===== SEÇÃO "ABOUT" (foto + texto sobre o Matheus) ===== -->
 <section id="about">
   <div class="wrap about">
     <div class="about-photo"><img src="avatar.png" alt="Matheus R." style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" /></div>
@@ -600,6 +697,8 @@
   </div>
 </section>
 
+
+<!-- ===== SEÇÃO "CLIENTS" (fileira de avatares que desliza sozinha) ===== -->
 <section id="clients">
   <div class="wrap">
     <div class="section-head" style="justify-content:center; text-align:center; flex-direction:column; align-items:center;">
@@ -631,6 +730,8 @@
   </div>
 </section>
 
+
+<!-- ===== SEÇÃO "CONTACT" (título + botões de contato) ===== -->
 <section id="contact" class="contact">
   <div class="wrap">
     <div class="section-label" data-i18n="contact.label">Contact</div>
@@ -644,6 +745,8 @@
   </div>
 </section>
 
+
+<!-- ===== RODAPÉ (ícones sociais + copyright) ===== -->
 <footer>
   <div class="footer-icons">
     <a href="mailto:editor.matheus@gmail.com" aria-label="Email">
@@ -665,7 +768,13 @@
   <p style="margin-top:20px;" data-i18n="footer.copyright">© 2026 Matheus R. — All rights reserved.</p>
 </footer>
 
+<!-- ===== JAVASCRIPT: toda a parte "interativa" do site vive aqui embaixo ===== -->
 <script>
+  /* ------------------------------------------------------------
+     1) FILTRO DE VÍDEOS (All / Shorts / Talking-head / Long-form)
+     Quando clica num botão de filtro, mostra só os cards daquela
+     categoria e esconde o resto (usando a classe "hide" do CSS).
+     ------------------------------------------------------------ */
   // Filter logic
   const filterBtns = document.querySelectorAll('.filter-btn');
   const cards = document.querySelectorAll('.work-card');
@@ -689,6 +798,11 @@
     });
   });
 
+  /* ------------------------------------------------------------
+     2) QUALIDADE DAS MINIATURAS DOS VÍDEOS
+     Tenta carregar a miniatura na melhor qualidade (maxresdefault).
+     Se não existir, cai pra uma qualidade menor automaticamente.
+     ------------------------------------------------------------ */
   // Thumbnail quality fallback: maxres -> sd -> hq (covers clones in the modal too)
   // Note: YouTube returns an actual 200 OK with a tiny 120x90 gray placeholder image
   // when a higher-res thumbnail doesn't exist for a video — it doesn't error out,
@@ -712,6 +826,11 @@
     }
   }, true);
 
+  /* ------------------------------------------------------------
+     3) TOCAR O VÍDEO AO CLICAR NO CARD
+     Só carrega o player do YouTube quando a pessoa clica — antes
+     disso só existe a miniatura (imagem), então a página carrega rápido.
+     ------------------------------------------------------------ */
   // Load YouTube embed on click (keeps page light — nothing loads until requested)
   function makeVideoLoadable(card){
     card.addEventListener('click', () => {
@@ -731,6 +850,11 @@
   }
   document.querySelectorAll('#workGrid .work-card[data-yt]').forEach(makeVideoLoadable);
 
+  /* ------------------------------------------------------------
+     4) POP-UP "VIEW ALL PROJECTS"
+     Abre/fecha o pop-up e, na primeira vez que abre, copia todos
+     os cards de vídeo da grade principal pra dentro do pop-up.
+     ------------------------------------------------------------ */
   // "View all projects" modal — every video on the site, scrollable, tap to play
   const videoModal = document.getElementById('videoModal');
   const modalGrid = document.getElementById('modalGrid');
@@ -765,6 +889,11 @@
     if(e.key === 'Escape' && videoModal.classList.contains('open')) closeModal();
   });
 
+  /* ------------------------------------------------------------
+     5) COPIAR ID DO DISCORD
+     Ao clicar no ícone do Discord, copia o ID pra área de
+     transferência (clipboard) em vez de abrir um link.
+     ------------------------------------------------------------ */
   // Discord copy-to-clipboard (ID: 263122436734582785)
   function copyDiscord(el, isIcon){
     el.addEventListener('click', (e) => {
@@ -780,6 +909,12 @@
   }
   copyDiscord(document.getElementById('discordFooterLink'), true);
 
+  /* ------------------------------------------------------------
+     6) TRADUÇÃO DO SITE (BOTÃO EN / PT)
+     Aqui embaixo tem um "dicionário" com cada frase do site em
+     inglês e em português. Ao clicar em EN ou PT, a função
+     applyLang() troca o texto de cada elemento pela tradução certa.
+     ------------------------------------------------------------ */
   // Language switcher — real EN/PT translation
   const translations = {
     en: {
@@ -851,6 +986,11 @@
     });
   });
 
+  /* ------------------------------------------------------------
+     7) MENU DO CELULAR (botão ☰)
+     Abre/fecha a listinha de links (Work, About, Clients, Contact)
+     que só aparece em telas estreitas.
+     ------------------------------------------------------------ */
   // Mobile nav menu
   const mobileToggle = document.getElementById('mobileMenuToggle');
   const navLinksEl = document.querySelector('.nav-links');

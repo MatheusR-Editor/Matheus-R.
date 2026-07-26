@@ -690,13 +690,26 @@
   });
 
   // Thumbnail quality fallback: maxres -> sd -> hq (covers clones in the modal too)
-  document.addEventListener('error', (e) => {
-    const img = e.target;
-    if(!img.classList || !img.classList.contains('yt-thumb-img')) return;
+  // Note: YouTube returns an actual 200 OK with a tiny 120x90 gray placeholder image
+  // when a higher-res thumbnail doesn't exist for a video — it doesn't error out,
+  // so we also have to check the loaded image's real dimensions, not just onerror.
+  function tryNextThumb(img){
     const id = img.dataset.yt;
     const step = img.dataset.step ? parseInt(img.dataset.step, 10) : 0;
     if(step === 0){ img.dataset.step = '1'; img.src = `https://i.ytimg.com/vi/${id}/sddefault.jpg`; }
     else if(step === 1){ img.dataset.step = '2'; img.src = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`; }
+  }
+  document.addEventListener('error', (e) => {
+    const img = e.target;
+    if(!img.classList || !img.classList.contains('yt-thumb-img')) return;
+    tryNextThumb(img);
+  }, true);
+  document.addEventListener('load', (e) => {
+    const img = e.target;
+    if(!img.classList || !img.classList.contains('yt-thumb-img')) return;
+    if(img.naturalWidth === 120 && img.naturalHeight === 90){
+      tryNextThumb(img);
+    }
   }, true);
 
   // Load YouTube embed on click (keeps page light — nothing loads until requested)
